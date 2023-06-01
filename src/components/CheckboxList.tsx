@@ -6,14 +6,16 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
-import { format } from "date-fns";
-// import { ItemProps } from "myTypes";
 
+type item = {
+  todos: {
+    note: string;
+    date: string;
+  }[];
+};
 
-
-
-const CheckboxList = ({todos}: any) => {
-  const [checked, setChecked] = useState([-1]);
+const CheckboxList: FC<item> = ({ todos }) => {
+  const [checked, setChecked] = useState([0]);
 
   const handleToggle = (value: number) => () => {
     const currentIndex = checked.indexOf(value);
@@ -30,7 +32,7 @@ const CheckboxList = ({todos}: any) => {
 
   return (
     <List sx={{ width: "100%", minWidth: 250, bgcolor: "background.paper" }}>
-      {[0, 1, 2, 3].map((value) => {
+      {todos.map((item: any, value: any) => {
         const labelId = `checkbox-list-label-${value}`;
 
         return (
@@ -50,25 +52,36 @@ const CheckboxList = ({todos}: any) => {
                 />
               </ListItemIcon>
               <ListItemText
+              
                 sx={
                   checked.indexOf(value) !== -1
-                    ? { textDecoration: "line-through", opacity: 0.3 }
-                    : {}
+                    ? {
+                        textDecoration: "line-through",
+                        opacity: 0.3,
+                        minWidth: 100
+                      }
+                    : { minWidth: 100 }
                 }
                 id={labelId}
-                primary={null}
+                primary={item.note}
               />
-            
+              <Typography
+                sx={{
+                  opacity: 0.3,
+                  p: 1,
+                  userSelect: "none",
+                  fontSize: 12,
+                  textAlign: "right",
+                }}
+              >
+                {item.date}
+              </Typography>
             </ListItemButton>
-            <Typography
-              sx={{ opacity: 0.3, p: 1, userSelect: "none", fontSize: 12, textAlign: 'right' }}
-            >
-            </Typography>
           </ListItem>
         );
       })}
     </List>
   );
-}
+};
 
 export default CheckboxList;

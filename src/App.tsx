@@ -7,17 +7,15 @@ import { MaterialUISwitch } from "./components/Switch";
 import ToDos from "./components/ToDos";
 import { useMediaQuery } from "@mui/material";
 
-
+type mode = "dark" | "light"
 
 function App() {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = useState(prefersDarkMode ? "dark" : "light");
+  const prefersDarkMode = useMediaQuery<string>("(prefers-color-scheme: dark)");
+  const [mode, setMode] = useState<mode>(prefersDarkMode ? "dark" : "light");
   useEffect(
     () => setMode(prefersDarkMode ? "dark" : "light"),
     [prefersDarkMode]
   );
-  
-  
 
   return (
     <ThemeProvider theme={mode === "light" ? LightTheme : DarkTheme}>

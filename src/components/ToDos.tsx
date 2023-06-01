@@ -2,50 +2,58 @@ import { Stack, Container, Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import CheckboxList from "./CheckboxList";
 import { FC, useState } from "react";
-// import { ItemProps } from "myTypes";
 import format from "date-fns/format";
+import {FormControl} from "@mui/material";
 
 type item = {
   note: string;
   date: string;
-  id: number;
-  isChecked: boolean;
-}
+};
 
 const ToDos = () => {
   const [todos, setTodos] = useState<item[]>([
     {
-      note: `🙏🏻 дать полине по жопе 🙏🏻`,
+      note: `🙏🏻 дать арсению по жопе 🙏🏻`,
       date: format(new Date(), "HH:mm, dd.MM yyyy"),
-      id: 0,
-      isChecked: false,
     },
   ]);
-  const [value, setValue] = useState("");
-  const handleChange = (event: any) => {
-    setValue(event.target.value);
+  const [value, setValue] = useState<string>("");
+  const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
+    const newObj = {
+      note: value,
+      date: format(new Date(), "HH:mm, dd.MM yyyy"),
+    };
+    setTodos((current) => [...current, newObj]);
+    setValue("");
   };
 
   return (
     <Container maxWidth="sm">
       <Stack direction={"column"} gap={5} alignItems={"center"}>
-      {/* /////////это пробный лист дел без мюи ////
-         {todos.map((todo) => ( 
-          <li key={todo.id}>{todo.note}</li>
-        ))}  */}
-        <CheckboxList todos={todos}/>
-        <Stack direction="row" spacing={2} justifyContent={"center"}>
-          <TextField
-            autoComplete="off"
-            autoCorrect="off"
-            id="outlined-basic"
-            variant="outlined"
-            value={value}
-            onChange={handleChange}
-          />
-          <Button variant="outlined">Add</Button>
+        <CheckboxList todos={todos} />
+          <form onSubmit={handleSubmit}>
+            <TextField
+              sx={{ mx: 1 }}
+              size="small"
+              autoComplete="off"
+              autoCorrect="off"
+              id="outlined-basic"
+              variant="outlined"
+              value={value}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setValue(event.target.value);
+              }}
+            />
+            <Button
+              sx={{ m: 0.2 }}
+              type="submit"
+              variant="outlined"
+            >
+              Add
+            </Button>
+          </form>
         </Stack>
-      </Stack>
     </Container>
   );
 };
