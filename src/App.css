@@ -1,3 +1,8 @@
 body, .MuiList-root {
   transition: all 0.25s;
+  padding-top: 20px;
+}
+
+.button {
+  height: 40px;
 }
