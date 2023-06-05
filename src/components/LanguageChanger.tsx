@@ -11,7 +11,12 @@ import { Context } from "./Localisation";
 import { useContext } from "react";
 import { Select } from "@mui/material";
 
-export default function LanguageChanger() {
+// type ChangerTypes = {
+//   selectLanguage: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+// }
+
+// const LanguageChanger: React.FC<ChangerTypes> = ({selectLanguage}) => {
+const LanguageChanger = () => {
   const context = useContext(Context);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -20,13 +25,21 @@ export default function LanguageChanger() {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event: Event | React.SyntheticEvent) => {
+  const handleListItemClick = (locale: string) => {
+    context.selectLanguage({ target: { value: locale } } as React.ChangeEvent<HTMLSelectElement>);
+    
+    setOpen(false);
+  };
+
+
+  const handleClose = (event: Event | React.SyntheticEvent, locale: string) => {
     if (
       anchorRef.current &&
       anchorRef.current.contains(event.target as HTMLElement)
     ) {
       return;
     }
+   handleListItemClick(locale)
 
     setOpen(false);
   };
@@ -81,20 +94,20 @@ export default function LanguageChanger() {
               }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
+                <ClickAwayListener onClickAway={(event) => handleClose(event, context.locale)}>
                   <MenuList
                     autoFocusItem={open}
                     id="composition-menu"
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem value="ru" onClick={handleClose}>
+                    <MenuItem onClick={(event) => handleClose(event, 'ru')}>
                       Русский
                     </MenuItem>
-                    <MenuItem value="en" onClick={handleClose}>
+                    <MenuItem onClick={(event) => handleClose(event, 'en')}>
                       English
                     </MenuItem>
-                    <MenuItem value="fr" onClick={handleClose}>
+                    <MenuItem onClick={(event) => handleClose(event, 'fr')}>
                       Français
                     </MenuItem>
                   </MenuList>
@@ -106,3 +119,5 @@ export default function LanguageChanger() {
     </Stack>
   );
 }
+
+export default LanguageChanger

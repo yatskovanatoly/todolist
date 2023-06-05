@@ -18,7 +18,7 @@ if (userLocale === "en") {
   lang = French;
 } else if (userLocale === "ru") {
   lang = Russian;
-}
+} 
 
 interface LocalisationProps {
   children: React.ReactNode;

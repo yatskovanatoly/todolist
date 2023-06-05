@@ -10,6 +10,7 @@ type item = {
   note: string;
   date: string;
   onEdit: boolean;
+  edited: boolean;
 };
 
 const ToDos: React.FC = () => {
@@ -18,18 +19,23 @@ const ToDos: React.FC = () => {
       note: `🙏🏻 дать арсению по жопе 🙏🏻`,
       date: format(new Date(), "HH:mm, dd.MM yyyy"),
       onEdit: false,
+      edited: false,
     },
   ]);
   const [value, setValue] = useState<string>("");
   const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
-    const newObj = {
-      note: value,
-      date: format(new Date(), "HH:mm, dd.MM yyyy"),
-      onEdit: false,
-    };
-    setTodos((current) => [...current, newObj]);
-    setValue('');
+    if (value !== "") {
+      e.stopPropagation();
+      e.preventDefault();
+      const newObj = {
+        note: value,
+        date: format(new Date(), "HH:mm, dd.MM yyyy"),
+        onEdit: false,
+        edited: false,
+      };
+      setTodos((current) => [...current, newObj]);
+      setValue("");
+    }
   };
 
   const translatedMessage = useIntl().formatMessage({ id: "textfield" });
@@ -38,10 +44,7 @@ const ToDos: React.FC = () => {
     <Container maxWidth="sm">
       <Stack direction={"column"} gap={5} alignItems={"center"}>
         {todos.length > 0 ? (
-          <CheckboxList
-            todos={todos}
-            setTodos={setTodos}
-          />
+          <CheckboxList todos={todos} setTodos={setTodos} />
         ) : (
           <Typography sx={{ opacity: 0.2 }}>
             <FormattedMessage

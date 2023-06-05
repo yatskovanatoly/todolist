@@ -1,6 +1,6 @@
 {
     "title": "Список дел:",
-    "modified": "изменено",
+    "modified": "изменено: ",
     "textfield": "добавить новое дело",
     "button": "добавить",
     "noTasksMessage": "бездельник"
