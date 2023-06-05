@@ -8,9 +8,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Localisation>
       <App />
     </Localisation>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

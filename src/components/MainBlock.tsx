@@ -1,10 +1,8 @@
-import { Stack, Container, Button, Typography } from "@mui/material";
-import { TextField } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import CheckboxList from "./CheckboxList";
 import { useState } from "react";
 import format from "date-fns/format";
 import { FormattedMessage } from "react-intl";
-import { useIntl } from "react-intl";
 import InputField from "./InputField";
 
 type item = {
@@ -15,7 +13,7 @@ type item = {
   checked: boolean;
 };
 
-const ToDos: React.FC = () => {
+const MainBlock: React.FC = () => {
   const [todos, setTodos] = useState<item[]>([
     {
       note: `🙏🏻 дать арсению по жопе 🙏🏻`,
@@ -38,9 +36,9 @@ const ToDos: React.FC = () => {
           />
         </Typography>
       )}
-      <InputField setTodos={setTodos} />
+      <InputField setTodos={setTodos} todos={todos}/>
     </Stack>
   );
 };
 
-export default ToDos;
+export default MainBlock;

@@ -1,39 +1,71 @@
 import { Button } from "@mui/material";
-import { TextField } from "@mui/material";
-import { useState } from "react";
+import { TextField, Stack } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import format from "date-fns/format";
 import { FormattedMessage } from "react-intl";
 import { useIntl } from "react-intl";
 
 type Item = {
+  todos: {
+    note: string;
+    date: string;
+    onEdit: boolean;
+    edited: boolean;
+    checked: boolean;
+  }[];
   setTodos: Function;
 };
 
-const InputField: React.FC<Item> = ({ setTodos }) => {
+const InputField: React.FC<Item> = ({ todos, setTodos }) => {
   const [value, setValue] = useState<string>("");
   const translatedMessage = useIntl().formatMessage({ id: "textfield" });
-  const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
+  const handleSubmit = () => {
     if (value !== "") {
-      e.stopPropagation();
-      e.preventDefault();
       const newObj = {
         note: value,
         date: format(new Date(), "HH:mm, dd.MM yyyy"),
-        onEdit: false, 
+        onEdit: false,
         edited: false,
         checked: false,
       };
-      setTodos((current: any) => [...current, newObj]);
-      setValue("");
+      setTodos(
+        (
+          current: {
+            note: string;
+            date: string;
+            onEdit: boolean;
+            edited: boolean;
+            checked: boolean;
+          }[]
+        ) => [...current, newObj]
+      );
     }
+    setValue("");
   };
 
+  const ref = useRef<HTMLElement>();
+
+  useEffect(() => {
+    if (document.activeElement === ref.current) {
+      const handler = function (k: KeyboardEvent) {
+        if (k.code === "Enter") handleSubmit();
+      };
+      window.addEventListener("keydown", handler);
+      return () => window.removeEventListener("keydown", handler);
+    }
+  }, [ref, value, handleSubmit]);
+
+  const updatedMode = todos.map((obj, index) => ({ ...obj, onEdit: false }))
+
   return (
-    <form onSubmit={handleSubmit}>
+    <Stack direction={'row'}>
       <TextField
-        required
-        sx={{ mx: 0.5 }}
+        onFocus={() => setTodos(updatedMode)}
+        inputRef={ref}
+        required={true}
+        sx={{ mx: 1, minWidth: 200 }}
         size="small"
+        // fullWidth
         autoComplete="off"
         autoCorrect="off"
         id="outlined-basic"
@@ -46,13 +78,13 @@ const InputField: React.FC<Item> = ({ setTodos }) => {
       />
       <Button
         className="button"
-        sx={{ mx: 0.5 }}
-        type="submit"
+        sx={{ mx: 1, maxWidth: 50, fontSize: 10 }}
         variant="outlined"
+        onClick={handleSubmit}
       >
         <FormattedMessage id="button" defaultMessage="add" />
       </Button>
-    </form>
+    </Stack>
   );
 };
 

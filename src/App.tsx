@@ -4,7 +4,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { LightTheme, DarkTheme } from "./components/Themes";
 import { useState, useEffect } from "react";
 import { MaterialUISwitch } from "./components/Switch";
-import ToDos from "./components/ToDos";
+import MainBlock from "./components/MainBlock";
 import { useMediaQuery } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import LanguageChanger from "./components/LanguageChanger";
@@ -35,12 +35,12 @@ function App() {
             checked={mode === "light" ? false : true}
           />
         </Stack>
-        <Stack mt={15} mb={2} alignItems="center">
-          <h1>
+        <Stack mt={10} mb={2} alignItems="center">
+          <h2>
             <FormattedMessage id="title" defaultMessage="ToDo List:" />
-          </h1>
+          </h2>
         </Stack>
-        <ToDos />
+        <MainBlock />
       </Container>
     </ThemeProvider>
   );
