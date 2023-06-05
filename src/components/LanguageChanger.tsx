@@ -51,7 +51,6 @@ export default function LanguageChanger() {
 
   return (
     <Stack direction="row" spacing={2}>
-      <div>
         <Button
           size="large"
           sx={{ fontSize: 20 }}
@@ -104,7 +103,6 @@ export default function LanguageChanger() {
             </Grow>
           )}
         </Popper>
-      </div>
     </Stack>
   );
 }

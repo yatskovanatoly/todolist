@@ -29,7 +29,7 @@ const ToDos: React.FC = () => {
       onEdit: false,
     };
     setTodos((current) => [...current, newObj]);
-    setValue("");
+    setValue('');
   };
 
   const translatedMessage = useIntl().formatMessage({ id: "textfield" });
@@ -41,8 +41,6 @@ const ToDos: React.FC = () => {
           <CheckboxList
             todos={todos}
             setTodos={setTodos}
-            setValue={setValue}
-            text={value}
           />
         ) : (
           <Typography sx={{ opacity: 0.2 }}>
