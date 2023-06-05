@@ -5,7 +5,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
-import { IconButton } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { TextField } from "@mui/material";
@@ -21,12 +21,16 @@ const ToDoItem: FC<TodoItemProps> = ({
   ...item
 }) => {
   const [editValue, setEditValue] = useState<string>("");
+  const translatedMessage = useIntl().formatMessage({ id: "modified" });
   const labelId = `checkbox-list-label-${index}`;
   const ref = useRef<HTMLElement>();
-  const translatedMessage = useIntl().formatMessage({ id: "modified" });
 
   useEffect(() => {
-    if (ref.current && document.activeElement === ref.current && item.onEdit) {
+    console.log(item.onEdit);
+    console.log(ref.current);
+    console.log(document.activeElement);
+
+    if (document.activeElement === ref.current && item.onEdit) {
       const handler = function (k: KeyboardEvent) {
         if (k.code === "Enter") handleUpdate(index, editValue);
       };
@@ -40,7 +44,7 @@ const ToDoItem: FC<TodoItemProps> = ({
       key={index}
       disablePadding
       divider
-      onClick={(event) => handleToggle(index, event)}
+      onClick={(event) => (item.onEdit ? null : handleToggle(index, event))}
     >
       {!item.onEdit ? (
         <>
@@ -88,25 +92,26 @@ const ToDoItem: FC<TodoItemProps> = ({
             >
               <DeleteIcon fontSize="inherit" />
             </IconButton>
-            <Typography
-              sx={{
-                opacity: 0.3,
-                userSelect: "none",
-                fontSize: 12,
-                textAlign: "right",
-                minWidth: 50,
-              }}
-            >
-              {item.edited ? translatedMessage : ""}
-              {item.date}
-            </Typography>
+            <Stack maxWidth={90} mr={-2}>
+              <Typography
+                sx={{
+                  opacity: 0.3,
+                  userSelect: "none",
+                  fontSize: 12,
+                  textAlign: "right",
+                  minWidth: 50,
+                }}
+              >
+                {item.edited ? translatedMessage : ""}
+                {item.date}
+              </Typography>
+            </Stack>
           </ListItemButton>
         </>
       ) : (
         <>
           <TextField
             inputRef={ref}
-            focused
             autoFocus
             fullWidth
             size="small"
@@ -115,8 +120,8 @@ const ToDoItem: FC<TodoItemProps> = ({
             id="outlined-basic"
             variant="standard"
             defaultValue={item.note}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setEditValue(event.target.value);
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setEditValue(e.target.value);
             }}
           />
           <IconButton
