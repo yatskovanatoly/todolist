@@ -1,27 +1,20 @@
-import { FC, useState } from "react";
 import List from "@mui/material/List";
 import format from "date-fns/format";
 import ToDoItem from "./ToDoItem";
-import { useIntl } from "react-intl";
 
-const CheckboxList: FC<Item> = ({ todos, setTodos }) => {
-  const [checked, setChecked] = useState([-1]);
+const CheckboxList: React.FC<Item> = ({ todos, setTodos }) => {
+
   const handleToggle = (
     value: number,
     event: React.MouseEvent<HTMLLIElement>
   ) => {
-    event.stopPropagation();
+    // event.stopPropagation();
 
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    const updatedChecked = todos.map((obj, index) =>
+      index === value ? { ...obj, checked: !obj.checked } : obj
+    );
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+    setTodos(updatedChecked);
   };
 
   const handleEdit = (
@@ -64,7 +57,6 @@ const CheckboxList: FC<Item> = ({ todos, setTodos }) => {
       {todos.map((item, index) => (
         <ToDoItem
           key={index}
-          checked={checked}
           handleEdit={handleEdit}
           handleUpdate={handleUpdate}
           handleToggle={handleToggle}
@@ -83,6 +75,7 @@ type Item = {
     date: string;
     onEdit: boolean;
     edited: boolean;
+    checked: boolean;
   }[];
   setTodos: Function;
 };

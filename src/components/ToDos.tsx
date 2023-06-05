@@ -5,12 +5,14 @@ import { useState } from "react";
 import format from "date-fns/format";
 import { FormattedMessage } from "react-intl";
 import { useIntl } from "react-intl";
+import InputField from "./InputField";
 
 type item = {
   note: string;
   date: string;
   onEdit: boolean;
   edited: boolean;
+  checked: boolean;
 };
 
 const ToDos: React.FC = () => {
@@ -20,66 +22,24 @@ const ToDos: React.FC = () => {
       date: format(new Date(), "HH:mm, dd.MM yyyy"),
       onEdit: false,
       edited: false,
+      checked: false,
     },
   ]);
-  const [value, setValue] = useState<string>("");
-  const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
-    if (value !== "") {
-      e.stopPropagation();
-      e.preventDefault();
-      const newObj = {
-        note: value,
-        date: format(new Date(), "HH:mm, dd.MM yyyy"),
-        onEdit: false,
-        edited: false,
-      };
-      setTodos((current) => [...current, newObj]);
-      setValue("");
-    }
-  };
-
-  const translatedMessage = useIntl().formatMessage({ id: "textfield" });
 
   return (
-    <Container maxWidth="sm">
-      <Stack direction={"column"} gap={5} alignItems={"center"}>
-        {todos.length > 0 ? (
-          <CheckboxList todos={todos} setTodos={setTodos} />
-        ) : (
-          <Typography sx={{ opacity: 0.2 }}>
-            <FormattedMessage
-              id="noTasksMessage"
-              defaultMessage="such a slacker"
-            />
-          </Typography>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <TextField
-            required
-            sx={{ mx: 0.5 }}
-            size="small"
-            autoComplete="off"
-            autoCorrect="off"
-            id="outlined-basic"
-            variant="outlined"
-            placeholder={translatedMessage}
-            value={value}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setValue(event.target.value);
-            }}
+    <Stack direction={"column"} gap={5} alignItems={"center"}>
+      {todos.length > 0 ? (
+        <CheckboxList todos={todos} setTodos={setTodos} />
+      ) : (
+        <Typography sx={{ opacity: 0.2 }}>
+          <FormattedMessage
+            id="noTasksMessage"
+            defaultMessage="such a slacker"
           />
-          <Button
-            className="button"
-            sx={{ mx: 0.5 }}
-            type="submit"
-            variant="outlined"
-          >
-            <FormattedMessage id="button" defaultMessage="add" />
-          </Button>
-        </form>
-      </Stack>
-    </Container>
+        </Typography>
+      )}
+      <InputField setTodos={setTodos} />
+    </Stack>
   );
 };
 

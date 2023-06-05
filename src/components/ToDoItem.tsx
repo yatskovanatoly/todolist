@@ -1,4 +1,4 @@
-import { Typography, Stack } from "@mui/material";
+import { Typography } from "@mui/material";
 import { FC, useState, useEffect, useRef } from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -14,7 +14,6 @@ import { useIntl } from "react-intl";
 
 const ToDoItem: FC<TodoItemProps> = ({
   index,
-  checked,
   handleEdit,
   handleUpdate,
   handleDelete,
@@ -49,7 +48,7 @@ const ToDoItem: FC<TodoItemProps> = ({
             <ListItemIcon>
               <Checkbox
                 edge="start"
-                checked={checked.indexOf(index) !== -1}
+                checked={item.checked}
                 tabIndex={-1}
                 disableRipple
                 sx={{ ml: -3 }}
@@ -58,7 +57,7 @@ const ToDoItem: FC<TodoItemProps> = ({
             </ListItemIcon>
             <ListItemText
               sx={
-                checked.indexOf(index) !== -1
+                item.checked
                   ? {
                       wordWrap: "break-word",
                       textDecoration: "line-through",
@@ -140,13 +139,13 @@ type Item = {
     date: string;
     onEdit: boolean;
     edited: boolean;
+    checked: boolean;
   }[];
   setTodos: Function;
 };
 
 type TodoItemProps = Item["todos"][number] & {
   index: number;
-  checked: number[];
   handleEdit: (
     index: number,
     event: React.MouseEvent<HTMLButtonElement>

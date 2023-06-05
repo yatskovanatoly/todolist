@@ -2,7 +2,7 @@ import "./App.css";
 import { Container, CssBaseline, Stack } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { LightTheme, DarkTheme } from "./components/Themes";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { MaterialUISwitch } from "./components/Switch";
 import ToDos from "./components/ToDos";
 import { useMediaQuery } from "@mui/material";
