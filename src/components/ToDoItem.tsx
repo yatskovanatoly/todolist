@@ -26,10 +26,6 @@ const ToDoItem: FC<TodoItemProps> = ({
   const ref = useRef<HTMLElement>();
 
   useEffect(() => {
-    console.log(item.onEdit);
-    console.log(ref.current);
-    console.log(document.activeElement);
-
     if (document.activeElement === ref.current && item.onEdit) {
       const handler = function (k: KeyboardEvent) {
         if (k.code === "Enter") handleUpdate(index, editValue);
@@ -55,7 +51,6 @@ const ToDoItem: FC<TodoItemProps> = ({
                 checked={item.checked}
                 tabIndex={-1}
                 disableRipple
-                sx={{ ml: -3 }}
                 inputProps={{ "aria-labelledby": labelId }}
               />
             </ListItemIcon>
@@ -66,13 +61,9 @@ const ToDoItem: FC<TodoItemProps> = ({
                       wordWrap: "break-word",
                       textDecoration: "line-through",
                       opacity: 0.3,
-                      minWidth: 150,
-                      ml: -3,
                     }
                   : {
                       wordWrap: "break-word",
-                      minWidth: 150,
-                      ml: -3,
                     }
               }
               id={labelId}
@@ -81,6 +72,7 @@ const ToDoItem: FC<TodoItemProps> = ({
             <IconButton
               aria-label="edit"
               size="small"
+              sx={{opacity: 0.5, m: 0.3}}
               onClick={(event) => handleEdit(index, event)}
             >
               <EditIcon fontSize="inherit" />
@@ -88,18 +80,19 @@ const ToDoItem: FC<TodoItemProps> = ({
             <IconButton
               aria-label="delete"
               size="small"
+              sx={{opacity: 0.5, m: 0.3}}
               onClick={(event) => handleDelete(index, event)}
             >
               <DeleteIcon fontSize="inherit" />
             </IconButton>
-            <Stack maxWidth={90} mr={-2}>
+            <Stack maxWidth={90} >
               <Typography
                 sx={{
                   opacity: 0.3,
                   userSelect: "none",
-                  fontSize: 12,
+                  fontSize: 7,
                   textAlign: "right",
-                  minWidth: 50,
+                  width: 33,
                 }}
               >
                 {item.edited ? translatedMessage : ""}

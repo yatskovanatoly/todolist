@@ -55,17 +55,17 @@ const InputField: React.FC<Item> = ({ todos, setTodos }) => {
     }
   }, [ref, value, handleSubmit]);
 
-  const updatedMode = todos.map((obj, index) => ({ ...obj, onEdit: false }))
+  const resetEdit = todos.map((obj) => ({ ...obj, onEdit: false }));
 
   return (
-    <Stack direction={'row'}>
+    <Stack direction={"row"} >
       <TextField
-        onFocus={() => setTodos(updatedMode)}
+        onFocus={() => setTodos(resetEdit)}
         inputRef={ref}
         required={true}
         sx={{ mx: 1, minWidth: 200 }}
+        fullWidth
         size="small"
-        // fullWidth
         autoComplete="off"
         autoCorrect="off"
         id="outlined-basic"
@@ -78,7 +78,7 @@ const InputField: React.FC<Item> = ({ todos, setTodos }) => {
       />
       <Button
         className="button"
-        sx={{ mx: 1, maxWidth: 50, fontSize: 10 }}
+        sx={{ mx: 1, maxWidth: 50, fontSize: 10, paddingInline: 5 }}
         variant="outlined"
         onClick={handleSubmit}
       >

@@ -21,7 +21,7 @@ function App() {
   return (
     <ThemeProvider theme={mode === "light" ? LightTheme : DarkTheme}>
       <CssBaseline />
-      <Container maxWidth="sm">
+      <Container maxWidth="md" sx={{ pt: 3, pb: 10 }}>
         <Stack
           mt={1}
           direction={"row"}

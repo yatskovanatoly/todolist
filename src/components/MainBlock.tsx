@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, Container } from "@mui/material";
 import CheckboxList from "./CheckboxList";
 import { useState } from "react";
 import format from "date-fns/format";
@@ -25,19 +25,21 @@ const MainBlock: React.FC = () => {
   ]);
 
   return (
-    <Stack direction={"column"} gap={5} alignItems={"center"}>
-      {todos.length > 0 ? (
-        <CheckboxList todos={todos} setTodos={setTodos} />
-      ) : (
-        <Typography sx={{ opacity: 0.2 }}>
-          <FormattedMessage
-            id="noTasksMessage"
-            defaultMessage="such a slacker"
-          />
-        </Typography>
-      )}
-      <InputField setTodos={setTodos} todos={todos}/>
-    </Stack>
+    <Container maxWidth="sm">
+      <Stack direction={"column"} gap={5} alignItems={"center"}>
+        {todos.length > 0 ? (
+          <CheckboxList todos={todos} setTodos={setTodos} />
+        ) : (
+          <Typography sx={{ opacity: 0.2 }}>
+            <FormattedMessage
+              id="noTasksMessage"
+              defaultMessage="such a slacker"
+            />
+          </Typography>
+        )}
+        <InputField setTodos={setTodos} todos={todos} />
+      </Stack>
+    </Container>
   );
 };
 
