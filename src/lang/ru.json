@@ -3,5 +3,6 @@
     "modified": "изменено: ",
     "textfield": "добавить новое дело",
     "button": "добавить",
-    "noTasksMessage": "бездельник"
+    "noTasksMessage": "бездельник",
+    "language": "ру"
 }

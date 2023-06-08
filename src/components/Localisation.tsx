@@ -10,7 +10,6 @@ export const Context = createContext<{
 }>({ locale: "", selectLanguage: () => {} });
 
 const userLocale = navigator.language;
-
 let lang: Record<string, string> = {};
 if (userLocale === "en") {
   lang = English;
@@ -18,7 +17,9 @@ if (userLocale === "en") {
   lang = French;
 } else if (userLocale === "ru") {
   lang = Russian;
-} 
+} else {
+  lang = English;
+}
 
 interface LocalisationProps {
   children: React.ReactNode;
@@ -37,6 +38,8 @@ const Localisation: React.FC<LocalisationProps> = ({ children }) => {
       setMessages(French);
     } else if (newLocale === "ru") {
       setMessages(Russian);
+    } else {
+      setMessages(English);
     }
   }
 

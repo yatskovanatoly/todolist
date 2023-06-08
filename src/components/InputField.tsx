@@ -18,7 +18,7 @@ type Item = {
 
 const InputField: React.FC<Item> = ({ todos, setTodos }) => {
   const [value, setValue] = useState<string>("");
-  const translatedMessage = useIntl().formatMessage({ id: "textfield" });
+  const translatedMessage = useIntl().formatMessage({ id: "textfield", defaultMessage: "add your task here" });
   const handleSubmit = () => {
     if (value !== "") {
       const newObj = {

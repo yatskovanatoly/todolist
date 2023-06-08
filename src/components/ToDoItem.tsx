@@ -21,7 +21,7 @@ const ToDoItem: FC<TodoItemProps> = ({
   ...item
 }) => {
   const [editValue, setEditValue] = useState<string>("");
-  const translatedMessage = useIntl().formatMessage({ id: "modified" });
+  const translatedMessage = useIntl().formatMessage({ id: "modified", defaultMessage: 'modified: ' });
   const labelId = `checkbox-list-label-${index}`;
   const ref = useRef<HTMLElement>();
 

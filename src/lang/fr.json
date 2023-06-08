@@ -3,5 +3,6 @@
     "modified": "modifié: ",
     "textfield": "ajoutez votre tâche içi",
     "button": "ajouter",
-    "noTasksMessage": "tel un fainéant"
+    "noTasksMessage": "tel un fainéant",
+    "language": "fr"
 }

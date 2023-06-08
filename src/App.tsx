@@ -1,5 +1,3 @@
-'use client'
-
 import "./App.css";
 import { Container, CssBaseline, Stack } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
@@ -12,9 +10,9 @@ import { FormattedMessage } from "react-intl";
 import LanguageChanger from "./components/LanguageChanger";
 
 function App() {
-  type mode = "dark" | "light";
+  type theme = "dark" | "light";
   const prefersDarkMode = useMediaQuery<string>("(prefers-color-scheme: dark)");
-  const [mode, setMode] = useState<mode>(prefersDarkMode ? "dark" : "light");
+  const [mode, setMode] = useState<theme>(prefersDarkMode ? "dark" : "light");
   useEffect(
     () => setMode(prefersDarkMode ? "dark" : "light"),
     [prefersDarkMode]

@@ -9,13 +9,8 @@ import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
 import { Context } from "./Localisation";
 import { useContext } from "react";
-import { Select } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
-// type ChangerTypes = {
-//   selectLanguage: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-// }
-
-// const LanguageChanger: React.FC<ChangerTypes> = ({selectLanguage}) => {
 const LanguageChanger = () => {
   const context = useContext(Context);
   const [open, setOpen] = React.useState(false);
@@ -26,11 +21,12 @@ const LanguageChanger = () => {
   };
 
   const handleListItemClick = (locale: string) => {
-    context.selectLanguage({ target: { value: locale } } as React.ChangeEvent<HTMLSelectElement>);
-    
+    context.selectLanguage({
+      target: { value: locale },
+    } as React.ChangeEvent<HTMLSelectElement>);
+
     setOpen(false);
   };
-
 
   const handleClose = (event: Event | React.SyntheticEvent, locale: string) => {
     if (
@@ -39,7 +35,7 @@ const LanguageChanger = () => {
     ) {
       return;
     }
-   handleListItemClick(locale)
+    handleListItemClick(locale);
 
     setOpen(false);
   };
@@ -53,7 +49,6 @@ const LanguageChanger = () => {
     }
   }
 
-  // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
     if (prevOpen.current === true && open === false) {
@@ -64,60 +59,61 @@ const LanguageChanger = () => {
 
   return (
     <Stack direction="row" spacing={2}>
-        <Button
-          size="large"
-          sx={{ fontSize: 20 }}
-          ref={anchorRef}
-          id="composition-button"
-          aria-controls={open ? "composition-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-          // onChange={context.selectLanguage}
-        >
-          {context.locale}
-        </Button>
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          placement="bottom-start"
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom-start" ? "left top" : "left bottom",
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={(event) => handleClose(event, context.locale)}>
-                  <MenuList
-                    autoFocusItem={open}
-                    id="composition-menu"
-                    aria-labelledby="composition-button"
-                    onKeyDown={handleListKeyDown}
-                  >
-                    <MenuItem onClick={(event) => handleClose(event, 'ru')}>
-                      Русский
-                    </MenuItem>
-                    <MenuItem onClick={(event) => handleClose(event, 'en')}>
-                      English
-                    </MenuItem>
-                    <MenuItem onClick={(event) => handleClose(event, 'fr')}>
-                      Français
-                    </MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+      <Button
+        size="large"
+        sx={{ fontSize: 20 }}
+        ref={anchorRef}
+        id="composition-button"
+        aria-controls={open ? "composition-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
+        aria-haspopup="true"
+        onClick={handleToggle}
+      >
+        <FormattedMessage id="language" defaultMessage={"EN"} />
+      </Button>
+      <Popper
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        placement="bottom-start"
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom-start" ? "left top" : "left bottom",
+            }}
+          >
+            <Paper>
+              <ClickAwayListener
+                onClickAway={(event) => handleClose(event, context.locale)}
+              >
+                <MenuList
+                  autoFocusItem={open}
+                  id="composition-menu"
+                  aria-labelledby="composition-button"
+                  onKeyDown={handleListKeyDown}
+                >
+                  <MenuItem onClick={(event) => handleClose(event, "ru")}>
+                    Русский
+                  </MenuItem>
+                  <MenuItem onClick={(event) => handleClose(event, "en")}>
+                    English
+                  </MenuItem>
+                  <MenuItem onClick={(event) => handleClose(event, "fr")}>
+                    Français
+                  </MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
     </Stack>
   );
-}
+};
 
-export default LanguageChanger
+export default LanguageChanger;

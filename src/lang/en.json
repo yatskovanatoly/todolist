@@ -3,5 +3,6 @@
     "modified": "modified: ",
     "textfield": "add your task here",
     "button": "add",
-    "noTasksMessage": "such a slacker"
+    "noTasksMessage": "such a slacker",
+    "language": "en"
 }

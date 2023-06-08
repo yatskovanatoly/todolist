@@ -1,19 +1,9 @@
-'use client'
-
 import { Stack, Typography, Container } from "@mui/material";
 import CheckboxList from "./CheckboxList";
 import { useState, useEffect } from "react";
 import format from "date-fns/format";
 import { FormattedMessage } from "react-intl";
 import InputField from "./InputField";
-
-// type item = {
-//   note: string;
-//   date: string;
-//   onEdit: boolean;
-//   edited: boolean;
-//   checked: boolean;
-// };
 
 const MainBlock = () => {
   const sampleTodo = [
@@ -26,15 +16,17 @@ const MainBlock = () => {
     },
   ];
 
-  const storedTodos = JSON.parse(localStorage.getItem("todos") || "[]");;
+  const storedTodos = JSON.parse(localStorage.getItem("todos") || "[]");
 
   const [todos, setTodos] = useState(
-    typeof window !== "undefined" && storedTodos.length !== 0 ? storedTodos : sampleTodo
+    typeof window !== "undefined" && storedTodos.length !== 0
+      ? storedTodos
+      : sampleTodo
   );
 
   useEffect(() => {
     if (storedTodos && storedTodos.length === 0) setTodos(sampleTodo);
-  }, []);  
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
