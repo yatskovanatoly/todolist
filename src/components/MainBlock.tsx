@@ -13,20 +13,18 @@ type item = {
   checked: boolean;
 };
 
-type Storage = {}
-
-const MainBlock: React.FC = () => {
-  // const [todos, setTodos] = useState<item[]>([
-  //   {
-  //     note: `🙏🏻 дать арсению по жопе 🙏🏻`,
-  //     date: format(new Date(), "HH:mm, dd.MM yyyy"),
-  //     onEdit: false,
-  //     edited: false,
-  //     checked: false,
-  //   },
-  // ]);
-  const storedTodos = JSON.parse(localStorage.getItem('todos') || '')
-  const [todos, setTodos] = useState(storedTodos);
+const MainBlock = () => {
+  const sampleTodo = [
+      {
+        note: `🙏🏻 дать полине по жопе 🙏🏻`,
+        date: format(new Date(), "HH:mm, dd.MM yyyy"),
+        onEdit: false,
+        edited: false,
+        checked: false,
+      },
+    ]
+  const storedTodos = JSON.parse(localStorage.getItem('todos') || 'todos')
+  const [todos, setTodos] = useState(storedTodos.length !== 0 ? storedTodos : sampleTodo);
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos))
