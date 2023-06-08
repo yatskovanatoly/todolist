@@ -1,6 +1,6 @@
 import { Stack, Typography, Container } from "@mui/material";
 import CheckboxList from "./CheckboxList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import format from "date-fns/format";
 import { FormattedMessage } from "react-intl";
 import InputField from "./InputField";
@@ -13,16 +13,24 @@ type item = {
   checked: boolean;
 };
 
+type Storage = {}
+
 const MainBlock: React.FC = () => {
-  const [todos, setTodos] = useState<item[]>([
-    {
-      note: `🙏🏻 дать арсению по жопе 🙏🏻`,
-      date: format(new Date(), "HH:mm, dd.MM yyyy"),
-      onEdit: false,
-      edited: false,
-      checked: false,
-    },
-  ]);
+  // const [todos, setTodos] = useState<item[]>([
+  //   {
+  //     note: `🙏🏻 дать арсению по жопе 🙏🏻`,
+  //     date: format(new Date(), "HH:mm, dd.MM yyyy"),
+  //     onEdit: false,
+  //     edited: false,
+  //     checked: false,
+  //   },
+  // ]);
+  const storedTodos = JSON.parse(localStorage.getItem('todos') || '')
+  const [todos, setTodos] = useState(storedTodos);
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
 
   return (
     <Container maxWidth="sm">

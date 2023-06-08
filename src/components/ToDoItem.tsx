@@ -47,7 +47,7 @@ const ToDoItem: FC<TodoItemProps> = ({
           <ListItemButton role={undefined} dense>
             <ListItemIcon>
               <Checkbox
-                edge="start"
+                edge='start'
                 checked={item.checked}
                 tabIndex={-1}
                 disableRipple
@@ -90,7 +90,7 @@ const ToDoItem: FC<TodoItemProps> = ({
                 sx={{
                   opacity: 0.3,
                   userSelect: "none",
-                  fontSize: 7,
+                  fontSize: 10,
                   textAlign: "right",
                   width: 33,
                 }}
