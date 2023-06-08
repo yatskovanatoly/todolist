@@ -1,3 +1,5 @@
+'use client'
+
 import "./App.css";
 import { Container, CssBaseline, Stack } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";

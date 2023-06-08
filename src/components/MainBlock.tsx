@@ -5,13 +5,13 @@ import format from "date-fns/format";
 import { FormattedMessage } from "react-intl";
 import InputField from "./InputField";
 
-type item = {
-  note: string;
-  date: string;
-  onEdit: boolean;
-  edited: boolean;
-  checked: boolean;
-};
+// type item = {
+//   note: string;
+//   date: string;
+//   onEdit: boolean;
+//   edited: boolean;
+//   checked: boolean;
+// };
 
 const MainBlock = () => {
   const sampleTodo = [
@@ -28,7 +28,7 @@ const MainBlock = () => {
     JSON.parse(localStorage.getItem("todos") || "todos") || sampleTodo;
 
   const [todos, setTodos] = useState(
-    typeof localStorage !== "undefined" ? storedTodos : sampleTodo
+    typeof window !== "undefined" ? storedTodos : sampleTodo
   );
 
   useEffect(() => {
