@@ -23,8 +23,13 @@ const MainBlock = () => {
         checked: false,
       },
     ]
-  const storedTodos = JSON.parse(localStorage.getItem('todos') || 'todos')
-  const [todos, setTodos] = useState(typeof window !== "undefined"  ? storedTodos : sampleTodo);
+
+
+    useEffect(() => {
+    const storedTodos = () => JSON.parse(localStorage.getItem('todos') || 'todos') || sampleTodo
+    }, [])
+
+  const [todos, setTodos] = useState(sampleTodo)
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos))
