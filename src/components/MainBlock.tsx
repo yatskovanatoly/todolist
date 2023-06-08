@@ -25,10 +25,10 @@ const MainBlock = () => {
   ];
 
   const storedTodos =
-    JSON.parse(localStorage.getItem("todos") || "") || sampleTodo;
+    JSON.parse(localStorage.getItem("todos") || "todos") || sampleTodo;
 
   const [todos, setTodos] = useState(
-    typeof window !== "undefined" ? storedTodos : sampleTodo
+    typeof window !== "undefined" && storedTodos.length !== 0 ? storedTodos : sampleTodo
   );
 
   useEffect(() => {
