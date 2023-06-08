@@ -25,12 +25,14 @@ const MainBlock = () => {
     ]
 
 
-    useEffect(() => {
     const storedTodos = () => JSON.parse(localStorage.getItem('todos') || 'todos') || sampleTodo
+    
+    const [todos, setTodos] = useState(sampleTodo)
+    
+    useEffect(() => {
+      setTodos(storedTodos())
     }, [])
-
-  const [todos, setTodos] = useState(sampleTodo)
-
+    
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos))
   }, [todos])
