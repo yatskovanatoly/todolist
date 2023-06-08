@@ -25,7 +25,7 @@ const MainBlock = () => {
   ];
 
   const storedTodos =
-    JSON.parse(localStorage.getItem("todos") || "todos") || sampleTodo;
+    JSON.parse(localStorage.getItem("todos") || "") || sampleTodo;
 
   const [todos, setTodos] = useState(
     typeof window !== "undefined" ? storedTodos : sampleTodo
