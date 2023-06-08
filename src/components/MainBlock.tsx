@@ -15,27 +15,29 @@ type item = {
 
 const MainBlock = () => {
   const sampleTodo = [
-      {
-        note: `🙏🏻 дать полине по жопе 🙏🏻`,
-        date: format(new Date(), "HH:mm, dd.MM yyyy"),
-        onEdit: false,
-        edited: false,
-        checked: false,
-      },
-    ]
+    {
+      note: `🙏🏻 дать полине по жопе 🙏🏻`,
+      date: format(new Date(), "HH:mm, dd.MM yyyy"),
+      onEdit: false,
+      edited: false,
+      checked: false,
+    },
+  ];
 
+  const storedTodos =
+    JSON.parse(localStorage.getItem("todos") || "todos") || sampleTodo;
 
-    const storedTodos = () => JSON.parse(localStorage.getItem('todos') || 'todos') || sampleTodo
-    
-    const [todos, setTodos] = useState(sampleTodo)
-    
-    useEffect(() => {
-      setTodos(storedTodos())
-    }, [])
-    
+  const [todos, setTodos] = useState(
+    typeof localStorage !== "undefined" ? storedTodos : sampleTodo
+  );
+
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos))
-  }, [todos])
+    if (storedTodos.length === 0) setTodos(sampleTodo);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <Container maxWidth="sm">
