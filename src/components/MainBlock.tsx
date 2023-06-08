@@ -1,3 +1,5 @@
+'use client'
+
 import { Stack, Typography, Container } from "@mui/material";
 import CheckboxList from "./CheckboxList";
 import { useState, useEffect } from "react";
@@ -24,16 +26,15 @@ const MainBlock = () => {
     },
   ];
 
-  const storedTodos =
-    JSON.parse(localStorage.getItem("todos") || "todos") || sampleTodo;
+  const storedTodos = JSON.parse(localStorage.getItem("todos") || "[]");;
 
   const [todos, setTodos] = useState(
     typeof window !== "undefined" && storedTodos.length !== 0 ? storedTodos : sampleTodo
   );
 
   useEffect(() => {
-    if (storedTodos.length === 0) setTodos(sampleTodo);
-  }, []);
+    if (storedTodos && storedTodos.length === 0) setTodos(sampleTodo);
+  }, []);  
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
