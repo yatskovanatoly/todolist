@@ -21,9 +21,7 @@ const LanguageChanger = () => {
   };
 
   const handleListItemClick = (locale: string) => {
-    context.selectLanguage({
-      target: { value: locale },
-    } as React.ChangeEvent<HTMLSelectElement>);
+    context.selectLanguage(locale);
 
     setOpen(false);
   };

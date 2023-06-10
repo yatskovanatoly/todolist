@@ -1,47 +1,27 @@
-import React, { createContext, useState } from "react";
+import React, { PropsWithChildren, createContext, useCallback, useState } from "react";
 import { IntlProvider } from "react-intl";
-import French from "../lang/fr.json";
-import English from "../lang/en.json";
-import Russian from "../lang/ru.json";
+import fr from "../lang/fr.json";
+import en from "../lang/en.json";
+import ru from "../lang/ru.json";
 
-export const Context = createContext<{
-  locale: string;
-  selectLanguage: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}>({ locale: "", selectLanguage: () => {} });
+const defaultLocale = en
 
-const userLocale = navigator.language;
-let lang: Record<string, string> = {};
-if (userLocale === "en") {
-  lang = English;
-} else if (userLocale === "fr") {
-  lang = French;
-} else if (userLocale === "ru") {
-  lang = Russian;
-} else {
-  lang = English;
+export const Context = createContext<LocaleContext>({ locale: 'en', selectLanguage: () => {} });
+
+const langs: Record<string, Messages> = {
+  ru,
+  en,
+  fr
 }
 
-interface LocalisationProps {
-  children: React.ReactNode;
-}
-
-const Localisation: React.FC<LocalisationProps> = ({ children }) => {
+const Localisation: React.FC<PropsWithChildren> = ({ children }) => {
+  const userLocale = navigator.language;
   const [locale, setLocale] = useState<string>(userLocale);
-  const [messages, setMessages] = useState<Record<string, string>>(lang);
+  const selectLanguage = useCallback((locale: string) => {
+    if (langs[locale]) setLocale(locale)
+  }, [])
 
-  function selectLanguage(e: React.ChangeEvent<HTMLSelectElement>) {
-    const newLocale = e.target.value;
-    setLocale(newLocale);
-    if (newLocale === "en") {
-      setMessages(English);
-    } else if (newLocale === "fr") {
-      setMessages(French);
-    } else if (newLocale === "ru") {
-      setMessages(Russian);
-    } else {
-      setMessages(English);
-    }
-  }
+  const messages  = langs[locale] || defaultLocale
 
   return (
     <Context.Provider value={{ locale, selectLanguage }}>
@@ -51,5 +31,11 @@ const Localisation: React.FC<LocalisationProps> = ({ children }) => {
     </Context.Provider>
   );
 };
+
+type Messages = typeof defaultLocale
+type LocaleContext = {
+  locale: string;
+  selectLanguage: (locale: string) => void;
+}
 
 export default Localisation;
