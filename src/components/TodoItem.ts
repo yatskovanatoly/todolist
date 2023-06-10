@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import DoneIcon from '@mui/icons-material/Done'
 import HistoryIcon from '@mui/icons-material/History'
-import { Box, IconButton, ListItem, ListItemButton, ListItemText, TextField } from '@mui/material'
+import { Box, ClickAwayListener, IconButton, ListItem, ListItemButton, ListItemText, TextField } from '@mui/material'
 import { createElement as $, FC, useState } from 'react'
 
 const TodoItem: FC<TodoItemProps> = (props) => {
@@ -10,7 +10,7 @@ const TodoItem: FC<TodoItemProps> = (props) => {
     ? $(Edit, {
         note: props.note,
         onChange: (value) => props.handleUpdate(props.index, value),
-        onDelete: console.log,
+        onDelete: () => props.handleDelete(props.index),
         setViewing: () => setIsEditing(false)
       })
     : $(View, {
@@ -60,18 +60,20 @@ const Edit: FC<EditProps> = ({
   onChange,
   onDelete
 }) =>
-  $(Box, { padding: '.5rem 0' },
-    $(TextField, {
-      onChange: (event) => onChange(event.target.value),
-      value: note,
-      autoFocus: true,
-      fullWidth: true,
-      variant: 'outlined',
-      // onBlur: setViewing,
-      InputProps: {
-        endAdornment: $(IconButton, { onClick: onDelete }, $(DeleteIcon))
-      }
-    }))
+  $(ClickAwayListener, {
+    onClickAway: setViewing,
+    children:
+      $(Box, { padding: '.5rem 0' },
+        $(TextField, {
+          onChange: (event) => onChange(event.target.value),
+          value: note,
+          autoFocus: true,
+          fullWidth: true,
+          variant: 'outlined',
+          InputProps: {
+            endAdornment: $(IconButton, { onClick: onDelete }, $(DeleteIcon))
+          }
+        }))})
 
 
 type ViewProps = Pick<TodoItemProps, 'note' | 'date'> & {
@@ -107,7 +109,6 @@ export type TodoItemProps = Item["todos"][number] & {
   handleUpdate: (index: number, note: string) => void;
   handleDelete: (
     index: number,
-    event: React.MouseEvent<HTMLButtonElement>
   ) => void;
   handleToggle: (index: number) => void;
 };

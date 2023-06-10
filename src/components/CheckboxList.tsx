@@ -40,9 +40,7 @@ const CheckboxList: React.FC<Item> = ({ todos, setTodos }) => {
 
   const handleDelete = (
     value: number,
-    event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    event.stopPropagation();
     const updatedArray = todos.filter((obj, index) => index !== value);
     setTodos(updatedArray);
   };
