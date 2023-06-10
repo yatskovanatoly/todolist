@@ -3,7 +3,6 @@ import format from "date-fns/format";
 import ToDoItem from "./ToDoItem";
 
 const CheckboxList: React.FC<Item> = ({ todos, setTodos }) => {
-
   const handleToggle = (
     value: number,
     event: React.MouseEvent<HTMLLIElement>
