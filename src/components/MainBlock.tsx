@@ -1,8 +1,8 @@
-import { Stack, Typography, Container } from "@mui/material";
-import CheckboxList from "./CheckboxList";
-import { useState, useEffect } from "react";
+import { Container, Stack, Typography } from "@mui/material";
 import format from "date-fns/format";
+import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import CheckboxList from "./CheckboxList";
 import InputField from "./InputField";
 
 const MainBlock = () => {

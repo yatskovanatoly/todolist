@@ -1,16 +1,15 @@
-import { Typography } from "@mui/material";
-import { FC, useState, useEffect, useRef } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DoneIcon from "@mui/icons-material/Done";
+import EditIcon from "@mui/icons-material/Edit";
+import { IconButton, Stack, TextField, Typography } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
-import { IconButton, Stack } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { TextField } from "@mui/material";
-import DoneIcon from "@mui/icons-material/Done";
+import { FC, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
+import { TodoItemProps } from "./TodoItem";
 
 const ToDoItem: FC<TodoItemProps> = ({
   index,
@@ -40,7 +39,7 @@ const ToDoItem: FC<TodoItemProps> = ({
       key={index}
       disablePadding
       divider
-      onClick={(event) => (item.onEdit ? null : handleToggle(index, event))}
+      onClick={(event) => (item.onEdit ? null : handleToggle(index))}
     >
       {!item.onEdit ? (
         <>
@@ -129,31 +128,6 @@ const ToDoItem: FC<TodoItemProps> = ({
       )}
     </ListItem>
   );
-};
-
-type Item = {
-  todos: {
-    note: string;
-    date: string;
-    onEdit: boolean;
-    edited: boolean;
-    checked: boolean;
-  }[];
-  setTodos: Function;
-};
-
-type TodoItemProps = Item["todos"][number] & {
-  index: number;
-  handleEdit: (
-    index: number,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => void;
-  handleUpdate: (index: number, note: string) => void;
-  handleDelete: (
-    index: number,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => void;
-  handleToggle: (index: number, event: React.MouseEvent<HTMLLIElement>) => void;
 };
 
 export default ToDoItem;

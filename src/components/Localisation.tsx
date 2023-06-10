@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, createContext, useCallback, useState } from "react";
 import { IntlProvider } from "react-intl";
-import fr from "../lang/fr.json";
 import en from "../lang/en.json";
+import fr from "../lang/fr.json";
 import ru from "../lang/ru.json";
 
 const defaultLocale = en
@@ -36,6 +36,14 @@ type Messages = typeof defaultLocale
 type LocaleContext = {
   locale: string;
   selectLanguage: (locale: string) => void;
+}
+
+declare global {
+  namespace FormatjsIntl {
+    interface Message {
+      ids: keyof Messages
+    }
+  }
 }
 
 export default Localisation;

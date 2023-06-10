@@ -1,18 +1,14 @@
 import List from "@mui/material/List";
 import format from "date-fns/format";
-import ToDoItem from "./ToDoItem";
+import ToDoItem from "./TodoItem";
 
 const CheckboxList: React.FC<Item> = ({ todos, setTodos }) => {
   const handleToggle = (
     value: number,
-    event: React.MouseEvent<HTMLLIElement>
   ) => {
-    event.stopPropagation();
-
     const updatedChecked = todos.map((obj, index) =>
       index === value ? { ...obj, checked: !obj.checked } : obj
     );
-
     setTodos(updatedChecked);
   };
 
